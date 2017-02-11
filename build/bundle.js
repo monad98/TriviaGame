@@ -31,22 +31,27 @@ var createClass = function () {
  * Created by Hyungwu Pae on 2/10/17.
  */
 
-console.log(results[0].correct_answer);
-var TriviaGame = function () {
-  function TriviaGame(qnas) {
-    classCallCheck(this, TriviaGame);
+var TriviaGameApp = function () {
+  function TriviaGameApp() {
+    classCallCheck(this, TriviaGameApp);
   }
 
-  createClass(TriviaGame, [{
+  createClass(TriviaGameApp, [{
     key: 'start',
+
+
+    // constructor(qnas) {}
+
     value: function start() {
-      console.log(results[0].correct_answer);
+      console.log(results[0]);
     }
   }]);
-  return TriviaGame;
+  return TriviaGameApp;
 }();
+var game = new TriviaGameApp();
+game.start();
 
-exports.TriviaGame = TriviaGame;
+exports.TriviaGameApp = TriviaGameApp;
 
 }((this['trivia-game'] = this['trivia-game'] || {})));
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnVuZGxlLmpzIiwic291cmNlcyI6WyIuLi9hc3NldHMvamF2YXNjcmlwdC9hcHAuanMiXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBDcmVhdGVkIGJ5IEh5dW5nd3UgUGFlIG9uIDIvMTAvMTcuXG4gKi9cblxuaW1wb3J0IHtyZXN1bHRzfSBmcm9tICcuL3RyaXZpYS5qc29uJztcblxuY29uc29sZS5sb2cocmVzdWx0c1swXS5jb3JyZWN0X2Fuc3dlcik7XG5leHBvcnQgY2xhc3MgVHJpdmlhR2FtZSB7XG5cbiAgY29uc3RydWN0b3IocW5hcykge31cblxuICBzdGFydCgpIHtcbiAgICBjb25zb2xlLmxvZyhyZXN1bHRzWzBdLmNvcnJlY3RfYW5zd2VyKTtcbiAgfVxufSJdLCJuYW1lcyI6WyJjb25zb2xlIiwibG9nIiwicmVzdWx0cyIsImNvcnJlY3RfYW5zd2VyIiwiVHJpdmlhR2FtZSIsInFuYXMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7QUFJQSxBQUVBQSxRQUFRQyxHQUFSLENBQVlDLFFBQVEsQ0FBUixFQUFXQyxjQUF2QjtBQUNBLElBQWFDLFVBQWI7c0JBRWNDLElBQVosRUFBa0I7Ozs7Ozs0QkFFVjtjQUNFSixHQUFSLENBQVlDLFFBQVEsQ0FBUixFQUFXQyxjQUF2Qjs7Ozs7Ozs7In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnVuZGxlLmpzIiwic291cmNlcyI6WyIuLi9hc3NldHMvamF2YXNjcmlwdC9hcHAuanMiXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBDcmVhdGVkIGJ5IEh5dW5nd3UgUGFlIG9uIDIvMTAvMTcuXG4gKi9cblxuaW1wb3J0IHtyZXN1bHRzfSBmcm9tICcuL3RyaXZpYS5qc29uJztcblxuZXhwb3J0IGNsYXNzIFRyaXZpYUdhbWVBcHAge1xuXG4gIC8vIGNvbnN0cnVjdG9yKHFuYXMpIHt9XG5cbiAgc3RhcnQoKSB7XG4gICAgY29uc29sZS5sb2cocmVzdWx0c1swXSk7XG4gIH1cbn1cbmNvbnN0IGdhbWUgPSBuZXcgVHJpdmlhR2FtZUFwcCgpO1xuZ2FtZS5zdGFydCgpOyJdLCJuYW1lcyI6WyJUcml2aWFHYW1lQXBwIiwibG9nIiwicmVzdWx0cyIsImdhbWUiLCJzdGFydCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7OztBQUlBLEFBRUEsSUFBYUEsYUFBYjs7Ozs7Ozs7Ozs7NEJBSVU7Y0FDRUMsR0FBUixDQUFZQyxRQUFRLENBQVIsQ0FBWjs7Ozs7QUFHSixJQUFNQyxPQUFPLElBQUlILGFBQUosRUFBYjtBQUNBRyxLQUFLQyxLQUFMOzs7OyJ9

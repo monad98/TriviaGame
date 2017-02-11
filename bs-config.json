@@ -1,0 +1,4 @@
+{
+  "port": 9999,
+  "files": ["./build/*", "./index.html"]
+}
