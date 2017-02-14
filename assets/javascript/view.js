@@ -28,18 +28,26 @@ export class View {
     //number of question counter
     this.totalNum = $("#totalNum");
     this.currentNum = $("#currentNum");
+
+    //game result
+    this.gameEndBoxEl = $("#game-end");
+
   }
 
   //render problem with problem object
   renderProblem(problemObj) {
     const problem = problemObj.problem;
     const currentNum = problemObj.counter;
-    console.log(currentNum + ":   " + problem.q);
+    console.log(this.currentNum.text());
+
     // timer set, question title, code update, current question number
     this.remainingTimeEl.text("30");
     this.questionEl.text(problem.q);
     this.codeEl.html(problem.code); //TODO: Recreate every time
-    this.currentNum.text(currentNum);
+
+    if(this.currentNum.text() === "-" || +this.totalNum.text() > +this.currentNum.text()) this.currentNum.text(currentNum); //update current question number except last question
+
+    //code highlight
     hljs.initHighlighting();
 
     //merge correct choice and incorrect choices into new array
@@ -94,6 +102,35 @@ export class View {
 
   setTotalProblemCount(numOfQuestion) {
     this.totalNum.text(numOfQuestion);
+  }
+
+  renderGameEndView() {
+    const score = Math.round((+this.numCorrectEl.text()) / (+this.totalNum.text()) * 100);
+    this.gameEndBoxEl.find("h1 span.label").text("Score: " + score + "%");
+    if(score > 80) {
+      this.gameEndBoxEl.find("h2").text("Great Job!!");
+      this.gameEndBoxEl.find("img").attr("src","assets/images/great.png");
+    } else if(score > 50) {
+      this.gameEndBoxEl.find("h2").text("Good!");
+      this.gameEndBoxEl.find("img").attr("src","assets/images/ok.png");
+    } else {
+      this.gameEndBoxEl.find("h2").text("Oooops!");
+      this.gameEndBoxEl.find("img").attr("src","assets/images/bad.png");
+    }
+
+    //Show game ending view
+    this.gameEndBoxEl.show("slow");
+  }
+
+  tryAgainClicked() {
+    this.gameEndBoxEl.hide("slow");
+    this.startUI.show("slow");
+    this.currentNum.text("-");
+    this.totalNum.text("-");
+    this.numCorrectEl.text("0");
+    this.numWrongEl.text("0");
+    this.container.animate({ opacity: 0.3 });
+
   }
 
 

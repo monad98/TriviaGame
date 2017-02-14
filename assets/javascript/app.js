@@ -47,9 +47,16 @@ export class App {
       = this.start$
       .take(1)
       .map(ev => $(ev.target).text().toLowerCase())
-      .switchMap(difficulty => // easy, medium, hard
-        Observable.from(problems)
-          .filter(problem => problem.difficulty === difficulty) // filter only problems that has selected difficulty
+      .map(difficulty => {  // easy, medium, hard
+        // filter only problems that has selected difficulty
+        const selectedProblems = problems.filter(problem => problem.difficulty === difficulty);
+        const numberOfProblems = selectedProblems.length;
+        return {selectedProblems, numberOfProblems};
+      })
+      .do(({_, numberOfProblems}) => this.view.setTotalProblemCount(numberOfProblems)) // render total number of question. This is excuted only 1 time when user select difficulty
+      .switchMap(({selectedProblems, numberOfProblems}) =>
+        Observable
+          .from(selectedProblems)
           .concat(Observable.of({
             q: "You Completed All The Quizzes. Bonus Quiz: What is printed in the console?",
             code: "var howCanIStudyJavascript = \"Study All Night.\"\nfunction howManyDaysShouldIStudyJavascript() {\n    return howCanIStudyJavascript + \"For 3" +
@@ -58,12 +65,9 @@ export class App {
             correct: "Study All Night For 3 Years",
           })) // "Complete quizzes" message and bonus quiz
           .scan((acc, problem) => { // counting current question number;
-            acc.counter++;
-            return {counter: acc.counter, problem: problem};
+            const count = acc.counter + 1;
+            return {counter: count, problem: problem};
           },{counter: 0, problem:null})
-          .do(() => { // render total number of question
-            this.view.setTotalProblemCount(problems.filter((problem) => problem.difficulty === difficulty).length);
-          })
       );
 
 
@@ -115,11 +119,25 @@ export class App {
     this.problemsAndAnswers$
       = this.answer$
       .startWith({}) // fake answer for the first problem feed
-      .zip(this.problems$.do(x =>console.log(x.counter + ". " + x.problem.q))); // take while problem is not completed, Every 33 sec, receive new problem
+      .zip(this.problems$.do(x =>console.log(x))); // take while problem is not completed, Every 33 sec, receive new problem
 
+
+    //restart game button click event stream(try again)
+    Observable.fromEvent($("#try-again"), "click")
+      .subscribe(() => {
+        this.view.tryAgainClicked();
+        this.start();
+      })
+
+
+  }
+
+  start() {
+
+    if(this.triviaSub) this.triviaSub.unsubscribe(); //just for safe
 
     //problems subscription
-    //Don't need to unsubscribe, because when there is no more problems, it is completed.
+    //Mostly don't need to unsubscribe, because when there is no more problems, it is completed.
     this.triviaSub
       = this.problemsAndAnswers$.subscribe(
       ([answerObj, problemObj]) => {
@@ -135,13 +153,19 @@ export class App {
         }
       },
       () => {},
-      () => console.log("Trivia Quiz Completed!")
+      () => {
+        console.log("Trivia Quiz Completed!");
+
+        //after 1500ms of showing result of this problem, show overall game result
+        setTimeout(() => this.view.renderGameEndView(), 1500);
+      }
     );
   }
 }
 
 $(document).ready(() => {
   const app = new App(new View());
+  app.start();
 
 });
 
