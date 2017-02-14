@@ -19,14 +19,14 @@
       "code": "Number(\"1\") - 1 == 0;",
       "incorrect": ["false", "TypeError"],
       "correct": "true",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What is the result?",
       "code": "(true + false) > 2 + true;",
       "incorrect": ["true", "TypeError", "NaN"],
       "correct": "false",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What is alerted?",
@@ -61,7 +61,7 @@
       "code": "new Array(5).toString();",
       "incorrect": ["[]", "\"[]\""],
       "correct": "\",,,,\"",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What is printed in the console?",
@@ -110,7 +110,7 @@
       "code": "var arr = [];\narr[0]  = 'a';\narr[1]  = 'b';\narr.foo = 'c';\nalert(arr.length);",
       "incorrect": ["1", "3", "undefined"],
       "correct": "2",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What is the result?",
@@ -131,7 +131,7 @@
       "code": "NaN === NaN;",
       "incorrect": ["true", "TypeError"],
       "correct": "false",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does the above statement evaluate to?",
@@ -159,28 +159,28 @@
       "code": "var x   = 4,\n    obj = {\n        x: 3,\n        bar: function() {\n            var x = 2;\n            setTimeout(function() {\n                var x = 1;\n                alert(this.x);\n            }, 1000);\n        }\n    };\nobj.bar();",
       "incorrect": ["1", "2", "3", "undefined"],
       "correct": "4",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What is alerted?",
       "code": "x = 1;\nfunction bar() {\n    this.x = 2;\n    return x;\n}\nvar foo = new bar();\nalert(foo.x);",
       "incorrect": ["1", "undefined"],
       "correct": "2",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What value is alerted?",
       "code": "function foo(a) {\n    alert(arguments.length);\n}\nfoo(1, 2, 3);",
       "incorrect": ["1", "2", "undefined"],
       "correct": "3",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What value is alerted?",
       "code": "var foo = function bar() {};\nalert(typeof bar);",
       "incorrect": ["object", "undefined"],
       "correct": "function",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What value is alerted?",
@@ -243,7 +243,7 @@
       "code": "var a = 0;\nfunction getFunc() {\n    var a = 7;\n    return function(b) {\n        alert(a+b);\n    }\n}\nvar f = getFunc();\nf(5);",
       "incorrect": ["5", "7", "null", "undefined"],
       "correct": "12",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
@@ -257,28 +257,28 @@
       "code": "function whatDoesItDo(param){\n    return { blue:\"#0000ff\", green:\"#00ff00\", red:\"#ff0000\" }[param];\n}",
       "incorrect": ["It returns an object with colors and an array with the value of param", "This is invalid Javascript code"],
       "correct": "It converts red, green, and blue colors to their hex values",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
       "code": "function whatDoesItDo(color){\n    if (color !== 'blue' || color !== 'green') {\n        color = 'red';\n    }\n    return color;\n}",
       "incorrect": ["Returns blue, green or red, depending on the parameter \"color\"", "Returns only blue and green"],
       "correct": "Always returns red",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
       "code": "function whatDoesItDo(arr){\n    return arr.filter(function(elem, pos) {\n        return arr.indexOf(elem) == pos;\n    });\n};",
       "incorrect": ["Sums all the elements in the array", "Always returns an empty array"],
       "correct": "Removes duplicate values from array",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
       "code": "function whatDoesItDo(arr){\n    return arr.reduce(function(s, n){ return s + n; }, 0);\n}",
       "incorrect": ["Finds the largest element in the array", "Throws an exception"],
       "correct": "Sums all the elements in the array",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
@@ -299,7 +299,7 @@
       "code": "function whatDoesItDo(str){\n    return str.split('').reverse().join('')\n}",
       "incorrect": ["Returns the same string that was passed", "Returns an array"],
       "correct": "If a string is passed, returns a reversed copy",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
@@ -313,14 +313,14 @@
       "code": "function whatDoesItDo(arr){\n    return Math.max.apply(null, arr);\n}",
       "incorrect": ["Initialize Math.max with random numbers", "Throws an error"],
       "correct": "Finds the largest number in the array",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
       "code": "function whatDoesItDo(arr){\n    return arr.slice(0).sort();\n}",
       "incorrect": ["Sorts the original array", "Returns only the first, smallest element of the array"],
       "correct": "Returns a sorted copy of the array",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
@@ -353,14 +353,14 @@
       "code": "function whatDoesItDo(str){\n\treturn /^\\d{3,}$/.test(str);\n}",
       "incorrect": ["Counts the number of 'd' characters in the string", "Returns an array with numbers"],
       "correct": "Makes sure that the string contains only three or more digits",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",
       "code": "function whatDoesItDo(num){\n\treturn this + num;\n}\nwhatDoesItDo = whatDoesItDo.bind(10);",
       "incorrect": ["It will always return 10", "It will always return undefined"],
       "correct": "It will always return 10 more than the number passed as an argument",
-      "difficulty": "normal"
+      "difficulty": "medium"
     },
     {
       "q": "What does this function do?",

@@ -1,3 +1,6 @@
+.container {
+  opacity: 0.3;
+}
 .container, .panel, .panel-heading {
   position: relative;
 }
@@ -64,9 +67,10 @@ pre.rounded {
 .glyphicon-ok {
   color: green;
 }
-#start-msg {
+#start-ui {
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: 0 15px 15px 15px;
 }

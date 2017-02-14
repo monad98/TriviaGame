@@ -7,7 +7,9 @@ import $ from 'jquery';
 import {View} from './view'
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromEventPattern";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/timer";
+import "rxjs/add/observable/from";
 import "rxjs/add/operator/take";
 import "rxjs/add/operator/takeUntil";
 import "rxjs/add/operator/map";
@@ -20,6 +22,9 @@ import "rxjs/add/operator/do";
 import "rxjs/add/operator/mapTo";
 import "rxjs/add/operator/share";
 import "rxjs/add/operator/merge";
+import "rxjs/add/operator/switchMap";
+import "rxjs/add/operator/startWith";
+import "rxjs/add/operator/zip";
 
 
 export class App {
@@ -28,74 +33,99 @@ export class App {
     console.log("App Created!");
 
     this.view = view;
-    this.view.renderProblem(problems[0]);
+
+    this.start$
+      = Observable.fromEvent($(".start-button"), "click")
+      .do(() => this.view.hideStartUI()) // view update
+      .share(); //difficulty button submit
 
     //start event -> problems stream
-    this.start$
-      = Observable.fromEvent($("#start-button"), "click") //radio button submit
+    this.problems$
+      = this.start$
       .take(1)
-      .switchMap(difficulty => // easy, normal, hard
-        Observable.of(problems)
+      .map(ev => $(ev.target).text().toLowerCase())
+      .switchMap(difficulty => // easy, medium, hard
+        Observable.from(problems)
           .filter(problem => problem.difficulty === difficulty) // filter only problems that has selected difficulty
       );
 
-    //click stream
-    this.clickChoice$ = Observable.fromEventPattern((h) => {
-      $("#multiple-box").on("click", ".choice", h);
-    });
-
 
     //30 sec timer stream
-    this.timerForThirtySec$ = Observable.timer(0, 1000)
-      .map(t => 30-t)
-      .take(31) // for 30 seconds
-      .takeUntil(this.clickChoice$)
-      .do((t)=>console.log("timerForThirtySec$ stream: " + t))
-      .do(t => this.view.updateRemainingTime(t))
-      .repeatWhen((completed) =>
-        completed.delay(3000) // 3 secs delay for correct/wrong message.
-          .scan((acc) => acc+1, 1) // increase problem number (index of problems array)
-          .do(acc=> {
-            console.log("30 SECONDS COMPLETED");
-            return this.view.renderProblem(problems[acc]);
-          })
-      ) // repeat [number of problems] times
-      // .share();
+    // timer is started when use choose one of difficulty buttons
+    // TODO: check by .do((x) => console.log(x)
+    this.timer$
+      = this.start$
+      .switchMap(() =>
+        Observable.timer(0, 1000)
+          .map(t => 30-t)
+          .take(31) // for 30 seconds for solving problem
+          .takeUntil(this.clickChoice$)
+          // .do((t)=>console.log("timer$ stream: " + t))
+          .do(t => this.view.updateRemainingTime(t)) // update remaining time UI
+          .repeatWhen((completed) =>
+            completed.delay(1500) // 1.5 secs delay for correct/wrong message.
+              .do(() => {
+                console.log("30 Seconds Passed");
+              })
+          )
+      );
 
 
-    //no-click within 30 secs
+    //click stream
+    this.clickChoice$ = Observable.fromEventPattern((h) => {
+      $("#multiple-box").on("click", ".choice", h); // if one of multiple is clicked
+    })
+      .do(() => console.log("I am CLICK STREAM"))
+      .share();
+
+    //no-click within 30 secs stream
     this.noAnswer$
-      = this.timerForThirtySec$
-      .do((t)=>console.log("no answer stream: " + t))
+      = this.timer$
       .filter(t => t === 0)
       .mapTo(false); // answer is wrong
 
 
     //answer stream
-    this.answer$ = this.clickChoice$
+    this.answer$
+      = this.clickChoice$
       .map(e => $(e.target).data("correct")) // is answer correct? true or false
-      .merge(this.noAnswer$)
-      .scan((acc, isCorrect) => {
+      .merge(this.noAnswer$) // no click within 30 sec is considered as false answer
+      .scan((acc, isCorrect) => { // game stats and whether current answer is correct
         isCorrect ? acc.correct++ : acc.wrong++;
         return { correct: acc.correct, wrong: acc.wrong, isCurrentCorrect: isCorrect}
       }, { correct:0, wrong:0, isCurrentCorrect: false });
 
 
-    //answer subscription
-    this.answerSub
-      = this.answer$.subscribe(gameStat => this.view.showResultMsg(gameStat));
-  }
+    //stream that contain pairs of problem and answer
+    this.problemsAndAnswers$
+      = this.answer$
+      .startWith({}) // fake answer for the first problem feed
+      .zip(this.problems$); // take while problem is not completed, Every 33 sec, receive new problem
 
-  nextProblem() {
-    this.view.renderProblem(problems[15]);
-  }
 
-  start() {
-    //TODO: initial view
+    //problems subscription
+    //Don't need to unsubscribe, because when there is no more problems, it is completed.
+    this.triviaSub
+      = this.problemsAndAnswers$.subscribe(
+      ([gameStat, problem]) => {
 
-    this.nextProblem();
+        // this is real answer (not the first fake one)
+        if(gameStat.hasOwnProperty("isCurrentCorrect")) {
+          // After we show the result of user's answer , we wait 1.5 sec before we show another problem to user
+          this.view.showResultMsg(gameStat);
+          setTimeout(() => {
+            this.view.renderProblem(problem);
+          }, 1500);
+        } else { //this is a fake answer, so just show problem (not the result)
+          this.view.renderProblem(problem);
+        }
+      },
+      () => {},
+      () => console.log("Trivia Quiz Completed!")
+    );
   }
 }
+
 $(document).ready(() => {
   const app = new App(new View());
 

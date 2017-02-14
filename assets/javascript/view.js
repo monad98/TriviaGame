@@ -21,11 +21,13 @@ export class View {
     // Elements related to correct or wrong Message view
     this.correctMsg = $("#correct-msg");
     this.wrongMsg = $("#wrong-msg");
+
+    // start UI with difficulty choose buttons
+    this.startUI = $("#start-ui");
   }
 
   //render problem with problem object
   renderProblem(problem) {
-    console.log(problem);
 
     // timer set, question title, code update
     this.remainingTimeEl.text("30");
@@ -49,7 +51,7 @@ export class View {
 
   updateRemainingTime(t) {
     this.remainingTimeEl.text(t);
-    this.timeBarEl.css("width", (t / 30 * 100) + "%"); //decrease time bar length for 950ms
+    this.timeBarEl.css("width", (t / 30 * 100) + "%"); //decrease time bar length
   }
 
   showResultMsg(gameStat) {
@@ -63,7 +65,7 @@ export class View {
         setTimeout(() => {
           this.correctMsg.hide('slow');
           this.container.animate({ opacity: 1 });
-        }, 2500);
+        }, 1000);
       });
     }
     // wrong answer
@@ -73,9 +75,14 @@ export class View {
         setTimeout(() => {
           this.wrongMsg.hide('slow');
           this.container.animate({ opacity: 1 });
-        }, 2500);
+        }, 1000);
       });
     }
+  }
+
+  hideStartUI() {
+    this.startUI.hide("slow");
+    this.container.animate({ opacity: 1 });
   }
 
 
