@@ -24,15 +24,22 @@ export class View {
 
     // start UI with difficulty choose buttons
     this.startUI = $("#start-ui");
+
+    //number of question counter
+    this.totalNum = $("#totalNum");
+    this.currentNum = $("#currentNum");
   }
 
   //render problem with problem object
-  renderProblem(problem) {
-
-    // timer set, question title, code update
+  renderProblem(problemObj) {
+    const problem = problemObj.problem;
+    const currentNum = problemObj.counter;
+    console.log(currentNum + ":   " + problem.q);
+    // timer set, question title, code update, current question number
     this.remainingTimeEl.text("30");
     this.questionEl.text(problem.q);
     this.codeEl.html(problem.code); //TODO: Recreate every time
+    this.currentNum.text(currentNum);
     hljs.initHighlighting();
 
     //merge correct choice and incorrect choices into new array
@@ -85,7 +92,9 @@ export class View {
     this.container.animate({ opacity: 1 });
   }
 
-
+  setTotalProblemCount(numOfQuestion) {
+    this.totalNum.text(numOfQuestion);
+  }
 
 
 }
