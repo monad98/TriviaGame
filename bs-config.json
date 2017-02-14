@@ -1,4 +1,4 @@
 {
   "port": 9999,
-  "files": ["./build/*", "./index.html"]
+  "files": ["./build/*", "./index.html", "./assets/**/*"]
 }

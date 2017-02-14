@@ -1,0 +1,329 @@
+{
+  "problems": [
+    {
+      "q": "What is printed in the console?",
+      "code": "var foo = function foo() {\n    console.log(foo === foo);\n};\nfoo();",
+      "incorrect": ["false"],
+      "correct": "true"
+    },
+    {
+      "q": "What does the above alert?",
+      "code": "function aaa() {\n    return\n    {\n        test: 1\n    };\n}\nalert(typeof aaa());",
+      "incorrect": ["function", "number", "object"],
+      "correct": "undefined"
+    },
+    {
+      "q": "What is the result?",
+      "code": "Number(\"1\") - 1 == 0;",
+      "incorrect": ["false", "TypeError"],
+      "correct": "true"
+    },
+    {
+      "q": "What is the result?",
+      "code": "(true + false) > 2 + true;",
+      "incorrect": ["true", "TypeError", "NaN"],
+      "correct": "false"
+    },
+    {
+      "q": "What is alerted?",
+      "code": "function bar() {\n    return foo;\n    foo = 1\n    function foo() {}\n    var foo = \"11\";\n}\nalert(typeof bar());",
+      "incorrect": ["number", "undefined", "string", "Error"],
+      "correct": "function"
+    },
+    {
+      "q": "What is the order of values alerted?",
+      "code": "var x = 3;\nvar foo = {\n    x: 2,\n    baz: {\n        x: 1,\n        bar: function() {\n            return this.x;\n        }\n    }\n}\n\nvar go = foo.baz.bar;\n\nalert(go());\nalert(foo.baz.bar());",
+      "incorrect": ["1, 2", "1, 3", "2, 1", "2, 3", "3, 1", "3, 2"],
+      "correct": "3, 1"
+    },
+    {
+      "q": "What is the order of values alerted?",
+      "code": "new String(\"This is a string\") instanceof String;",
+      "incorrect": ["false", "TypeError"],
+      "correct": "true"
+    },
+    {
+      "q": "What is the result?",
+      "code": "[] + [] + \"foo\".split(\"\");",
+      "incorrect": ["TypeError", "[\"f\", \"o\", \"o\"]", "[][][\"f\", \"o\", \"o\"]"],
+      "correct": "\"f,o,o\""
+    },
+    {
+      "q": "What is the result?",
+      "code": "new Array(5).toString();",
+      "incorrect": ["[]", "\"[]\""],
+      "correct": "\",,,,\""
+    },
+    {
+      "q": "What is printed in the console?",
+      "code": "var myArr = [\"foo\", \"bar\", \"baz\"];\nmyArr.length = 0;\nmyArr.push(\"bin\");\nconsole.log(myArr);",
+      "incorrect": ["[\"foo\", \"bar\", \"baz\"]", "[\"foo\", \"bar\", \"baz\", \"bin\"]", "[\"bin\", \"foo\", \"bar\", \"baz\"]"],
+      "correct": "[\"bin\"]"
+    },
+    {
+      "q": "What is the result?",
+      "code": "String('Hello') === 'Hello';",
+      "incorrect": ["false", "TypeError"],
+      "correct": "true"
+    },
+    {
+      "q": "What is printed on the console",
+      "code": "var x = 0;\nfunction foo() {\n    x++;\n    this.x = x;\n    return foo;\n}\nvar bar = new new foo;\nconsole.log(bar.x);",
+      "incorrect": ["ReferenceError", "TypeError", "0", "1"],
+      "correct": "undefined"
+    },
+    {
+      "q": "What is the result?",
+      "code": "\"This is a string\" instanceof String;",
+      "incorrect": ["true", "TypeError"],
+      "correct": "false"
+    },
+    {
+      "q": "What is the result?",
+      "code": "var bar = 1,\n    foo = {};\n\nfoo: {\n    bar: 2;\n    baz: ++bar;\n};\nfoo.baz + foo.bar + bar;",
+      "incorrect": ["ReferenceError", "TypeError", "undefined", "4", "5"],
+      "correct": "NaN"
+    },
+    {
+      "q": "What is printed on the console?",
+      "code": "var myArr = ['foo', 'bar', 'baz'];\nmyArr[2];\nconsole.log('2' in myArr);",
+      "incorrect": ["false", "ReferenceError"],
+      "correct": "true"
+    },
+    {
+      "q": "What is printed on the console?",
+      "code": "var arr = [];\narr[0]  = 'a';\narr[1]  = 'b';\narr.foo = 'c';\nalert(arr.length);",
+      "incorrect": ["1", "3", "undefined"],
+      "correct": "2"
+    },
+    {
+      "q": "What is the result?",
+      "code": "10 > 9 > 8 === true;",
+      "incorrect": ["true"],
+      "correct": "false"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function foo(a, b) {\n    arguments[1] = 2;\n    alert(b);\n}\nfoo(1);",
+      "incorrect": ["2", "ReferenceError"],
+      "correct": "undefined"
+    },
+    {
+      "q": "What is the result?",
+      "code": "NaN === NaN;",
+      "incorrect": ["true", "TypeError"],
+      "correct": "false"
+    },
+    {
+      "q": "What does the above statement evaluate to?",
+      "code": "\"1\" + 2 + \"3\" + 4;",
+      "incorrect": ["10", "\"37\""],
+      "correct": "\"1234\""
+    },
+    {
+      "q": "What does the above statement evaluate to?",
+      "code": "4 + 3 + 2 + \"1\"",
+      "incorrect": ["10", "\"4321\""],
+      "correct": "\"91\""
+    },
+    {
+      "q": "What is alerted?",
+      "code": "var foo = 1;\nfunction bar() {\n    foo = 10;\n    return;\n    function foo() {}\n}\nbar();\nalert(foo);",
+      "incorrect": ["10", "Function", "undefined", "Error"],
+      "correct": "1"
+    },
+    {
+      "q": "What is alerted?",
+      "code": "function bar() {\n    return foo;\n    foo = 10;\n    function foo() {}\n    var foo = 11;\n}\nalert(typeof bar());",
+      "incorrect": ["number", "undefined", "Error"],
+      "correct": "function"
+    },
+    {
+      "q": "What is alerted?",
+      "code": "var x   = 4,\n    obj = {\n        x: 3,\n        bar: function() {\n            var x = 2;\n            setTimeout(function() {\n                var x = 1;\n                alert(this.x);\n            }, 1000);\n        }\n    };\nobj.bar();",
+      "incorrect": ["1", "2", "3", "undefined"],
+      "correct": "4"
+    },
+    {
+      "q": "What is alerted?",
+      "code": "x = 1;\nfunction bar() {\n    this.x = 2;\n    return x;\n}\nvar foo = new bar();\nalert(foo.x);",
+      "incorrect": ["1", "undefined"],
+      "correct": "2"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function foo(a) {\n    alert(arguments.length);\n}\nfoo(1, 2, 3);",
+      "incorrect": ["1", "2", "3", "undefined"],
+      "correct": "3"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "var foo = function bar() {};\nalert(typeof bar);",
+      "incorrect": ["object", "undefined"],
+      "correct": "function"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function foo(a) {\n    arguments[0] = 2;\n    alert(a);\n}\nfoo(1);",
+      "incorrect": ["1", "undefined"],
+      "correct": "2"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function foo(){}\ndelete foo.length;\nalert(typeof foo.length);",
+      "incorrect": ["undefined", "object", "Error"],
+      "correct": "number"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function() {\n    var a = 10;\n    if(a > 5) {\n        a = 7;\n    }\n    alert(a);\n}",
+      "incorrect": ["10", "null", "undefined"],
+      "correct": "7"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function() {\n    if(true) {\n        var a = 5;\n    }\n    alert(a);\n}",
+      "incorrect": ["0", "null", "undefined"],
+      "correct": "5"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "var a = 5;\nfunction first() {\n    a = 6;\n}\n\nfunction second() {\n    alert(a);\n}\nfirst();\nsecond();",
+      "incorrect": ["0", "5", "null", "undefined"],
+      "correct": "6"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "function first() {\n    window.a = 3;\n}\n\nfunction second() {\n    alert(a);\n}\nfirst();\nsecond();",
+      "incorrect": ["0", "null", "undefined"],
+      "correct": "3"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "var a = 5;\nfunction b() {\n    var a = 7;\n    alert(a);\n}\nb();",
+      "incorrect": ["5", "null", "undefined"],
+      "correct": "7"
+    },
+    {
+      "q": "What is the order of values alerted?",
+      "code": "var a = 6;\nfunction test() {\n    var a = 7;\n    function again() {\n        var a = 8;\n        alert(a);  // First\n    }\n    again();\n    alert(a);  // Second\n}\ntest();\n​alert(a);​  // Third",
+      "incorrect": ["6, 7, 8", "7, 6, 8", "8, 6, 7"],
+      "correct": "8, 7, 6"
+    },
+    {
+      "q": "What value is alerted?",
+      "code": "var a = 0;\nfunction getFunc() {\n    var a = 7;\n    return function(b) {\n        alert(a+b);\n    }\n}\nvar f = getFunc();\nf(5);",
+      "incorrect": ["5", "7", "null", "undefined"],
+      "correct": "12"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(val){\n    return val ? 1 : 2;\n}",
+      "incorrect": ["It returns val", "It always returns 2"],
+      "correct": "It returns 1 if val is truthful, otherwise 2"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(param){\n    return { blue:\"#0000ff\", green:\"#00ff00\", red:\"#ff0000\" }[param];\n}",
+      "incorrect": ["It returns an object with colors and an array with the value of param", "This is invalid Javascript code"],
+      "correct": "It converts red, green, and blue colors to their hex values"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(color){\n    if (color !== 'blue' || color !== 'green') {\n        color = 'red';\n    }\n    return color;\n}",
+      "incorrect": ["Returns blue, green or red, depending on the parameter \"color\"", "Returns only blue and green"],
+      "correct": "Always returns red"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(arr){\n    return arr.filter(function(elem, pos) {\n        return arr.indexOf(elem) == pos;\n    });\n};",
+      "incorrect": ["Sums all the elements in the array", "Always returns an empty array"],
+      "correct": "Removes duplicate values from array"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(arr){\n    return arr.reduce(function(s, n){ return s + n; }, 0);\n}",
+      "incorrect": ["Finds the largest element in the array", "Throws an exception"],
+      "correct": "Sums all the elements in the array"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(arr){\n    return arr.map( function(x){ return x*2; });\n}",
+      "incorrect": ["Reverses the array", "Returns a mutated array with numbers twice as large as the original value"],
+      "correct": "Returns a new array with numbers twice as large as the original value"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(mood){\n    return mood && \"I like this\" || \"I don't like this\";\n}",
+      "incorrect": ["Reverses the array", "Returns a mutated array with numbers twice as large as the original value"],
+      "correct": "If mood is true, will return \"I like this\", otherwise \"I don't like this\""
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(str){\n    return str.split('').reverse().join('')\n}",
+      "incorrect": ["Returns the same string that was passed", "Returns an array"],
+      "correct": "If a string is passed, returns a reversed copy"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(){\n    return document.querySelectorAll('*').length;\n}",
+      "incorrect": ["Throws an error", "Initialize an empty XHTML namespace"],
+      "correct": "Returns the number of elements on the page"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(arr){\n    return Math.max.apply(null, arr);\n}",
+      "incorrect": ["Initialize Math.max with random numbers", "Throws an error"],
+      "correct": "Finds the largest number in the array"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(arr){\n    return arr.slice(0).sort();\n}",
+      "incorrect": ["Sorts the original array", "Returns only the first, smallest element of the array"],
+      "correct": "Returns a sorted copy of the array"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(num){\n    return Math.max(0, Math.min(10, num));\n}",
+      "incorrect": ["Checks whether the number is between 0 and 10", "Always returns 0"],
+      "correct": "Fits the number passed as a parameter in an interval from 0 to 10"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(){\n    var values = [];\n    myBlock: {\n        values.push('1');\n        values.push('2');\n        break myBlock;\n        values.push('3');\n    }\n    values.push('4');\n    return values.join(',');\n}",
+      "incorrect": ["It will return the string '1,2,3,4'", "This is not valid Javascript - It will throw an error"],
+      "correct": "It will return the string '1,2,4'"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(){\n\treturn Array(4).join(\"lol\" - 2) + \" Batman!\";\n}",
+      "incorrect": ["Returns four arrays with Batman as their value", "Throws an error"],
+      "correct": "Returns \"NaNNaNNaN Batman!\""
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(str){\n\treturn str.bold().italics();\n}",
+      "incorrect": ["It returns an empty string", "It throws an error"],
+      "correct": "Returns HTML of the string wrapped in bold and italics tags"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(str){\n\treturn /^\\d{3,}$/.test(str);\n}",
+      "incorrect": ["Counts the number of 'd' characters in the string", "Returns an array with numbers"],
+      "correct": "Makes sure that the string contains only three or more digits"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(num){\n\treturn this + num;\n}\nwhatDoesItDo = whatDoesItDo.bind(10);",
+      "incorrect": ["It will always return 10", "It will always return undefined"],
+      "correct": "It will always return 10 more than the number passed as an argument"
+    },
+    {
+      "q": "What does this function do?",
+      "code": "function whatDoesItDo(){\n\treturn (![]+[])[+[]]+(![]+[])[+!+[]]+\n\t\t([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]];\n}",
+      "incorrect": ["Creates nested arrays 100 levels deep", "Causes your computer to explode"],
+      "correct": "Returns the string 'fail'"
+    }
+
+  ]
+}

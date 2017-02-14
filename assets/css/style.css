@@ -1,3 +1,67 @@
-h1 {
+.container, .panel, .panel-heading {
+  position: relative;
+}
+#question, .panel-heading {
+  font-size: 24px;
+}
+.glyphicon-time, #remaining-time {
+  color: #fff31a;
+}
+pre {
+  font-size: 1.1em;
+  padding: 0 10px;
   font-weight: bold;
+  margin-bottom: 0;
+  background-color: #2b303b;
+}
+pre.rounded {
+  border-radius: 10px;
+}
+#multiple-box {
+  margin-top: 20px;
+}
+.btn.btn-block {
+  /*margin-top: 15px;*/
+}
+/*#white-background {*/
+  /*position: fixed;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*background-color: white;*/
+/*}*/
+#correct-msg, #wrong-msg {
+  display: none;
+  z-index: 100;
+  background-size: contain;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+#correct-msg {
+  background-image: url("../images/approved-151676_640.png");
+}
+#wrong-msg {
+  background-image: url("../images/error-24842_640.png");
+}
+#js-image {
+  background-image: url("../images/javascript.png");
+  background-size: contain;
+  z-index: 1;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+#num-correct, #num-wrong {
+}
+.glyphicon-remove {
+  color: red;
+  margin-left: 80px;
+}
+.glyphicon-ok {
+  color: green;
 }

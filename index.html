@@ -1,27 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--Import Google Icon Font-->
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="assets/css/materialize.css" media="screen,projection"/>
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">-->
-  <!--<link type="text/css" rel="stylesheet" href="assets/css/style.css" media="screen,projection"/>-->
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="assets/css/ocean.css"/>
+  <link type="text/css" rel="stylesheet" href="assets/css/style.css" media="screen,projection"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="build/app.js"></script>
 </head>
 
 <body>
-<!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
-<!--<script type="text/javascript" src="./assets/javascript/jquery-3.1.1.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>-->
-<!--<script type="text/javascript" src="assets/javascript/materialize.js"></script>-->
-<!--<script type="text/javascript" src="assets/javascript/app.js"></script>-->
-<script type="text/javascript" src="build/app.js"></script>
-  <div id="question-box">
-    <h2 id="question"></h2>
+
+<div class="container">
+  <div class="page-header">
+    <h1 class="text-center">Javascript Trivia </h1>
+  </div>
+  <div class="row">
+    <h3 class="text-center">
+      <i class="glyphicon glyphicon-ok"></i> Correct: <span id="num-correct" class="label label-primary">0</span>
+      <i class="glyphicon glyphicon-remove"></i> Wrong: <span id="num-wrong" class="label label-danger">0</span>
+    </h3>
+  </div><br>
+  <div class="row">
+    <div class="progress progress-striped active">
+      <div id="time-bar" class="progress-bar" style="width: 0%"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="pull-right">
+          <i class="glyphicon glyphicon-time"></i> <span id="remaining-time">30</span>
+        </div>
+        <div id="question" class="panel-title"></div>
+
+      </div>
+      <div class="panel-body">
+      <pre class="rounded">
+        <code id="code-box" class="javascript">
+            constructor(view) {
+              this.view = view;
+              console.log("App Created!");
+              Observable.fromEvent($("#multiple-box"), "click")
+                .subscribe(console.log.bind(console));
+            }
+        </code>
+      </pre>
+        <div id="multiple-box">
+          <!--<button id="choice1" class="btn btn-primary btn-block ">Dog</button>-->
+          <!--<button id="choice2" class="btn btn-primary btn-block btn-lg">Cat</button>-->
+          <!--<button id="choice3" class="btn btn-primary btn-block btn-lg">Lamb</button>-->
+          <!--<button id="choice4" class="btn btn-primary btn-block btn-lg">Fox</button>-->
+        </div>
+      </div>
+      <div id="correct-msg"></div>
+      <div id="wrong-msg"></div>
+    </div>
   </div>
 
+  <div>
+    <p>sources of problem sets: </p>
+    <p>http://davidshariff.com/js-quiz</p>
+    <p>http://davidshariff.com/quiz</p>
+    <p>http://madebyknight.com/javascript-scope/</p>
+    <p>http://tutorialzine.com/2014/08/what-does-this-function-do/</p>
+  </div>
 
+  <div id="js-image"></div>
+</div>
 
 </body>
 </html>
