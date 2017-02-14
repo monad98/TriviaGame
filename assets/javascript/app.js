@@ -17,19 +17,27 @@ import "rxjs/add/operator/repeatWhen";
 import "rxjs/add/operator/delay";
 import "rxjs/add/operator/scan";
 import "rxjs/add/operator/do";
-// import "rxjs/add/operator/share";
+import "rxjs/add/operator/mapTo";
+import "rxjs/add/operator/share";
+import "rxjs/add/operator/merge";
 
 
 export class App {
 
-
-  // problemNo = 1;
-  // totalProblems = problems.length;
-
-
   constructor(view) {
-    this.view = view;
     console.log("App Created!");
+
+    this.view = view;
+    this.view.renderProblem(problems[0]);
+
+    //start event -> problems stream
+    this.start$
+      = Observable.fromEvent($("#start-button"), "click") //radio button submit
+      .take(1)
+      .switchMap(difficulty => // easy, normal, hard
+        Observable.of(problems)
+          .filter(problem => problem.difficulty === difficulty) // filter only problems that has selected difficulty
+      );
 
     //click stream
     this.clickChoice$ = Observable.fromEventPattern((h) => {
@@ -37,54 +45,47 @@ export class App {
     });
 
 
-    //answer stream
-    this.answer$ = this.clickChoice$
-      .map(e => $(e.target).data("isAnswer"));
-
     //30 sec timer stream
     this.timerForThirtySec$ = Observable.timer(0, 1000)
       .map(t => 30-t)
       .take(31) // for 30 seconds
-      .takeUntil(this.clickChoice$);
-
-
-    //whole game timer
-    this.timer$ = this.timerForThirtySec$
+      .takeUntil(this.clickChoice$)
+      .do((t)=>console.log("timerForThirtySec$ stream: " + t))
+      .do(t => this.view.updateRemainingTime(t))
       .repeatWhen((completed) =>
-        completed.delay(3000)
-          .scan((acc) => acc+1, 1)
+        completed.delay(3000) // 3 secs delay for correct/wrong message.
+          .scan((acc) => acc+1, 1) // increase problem number (index of problems array)
           .do(acc=> {
             console.log("30 SECONDS COMPLETED");
             return this.view.renderProblem(problems[acc]);
           })
-      ); // repeat [number of problems] times
+      ) // repeat [number of problems] times
+      // .share();
 
-    //timer subscription
-    this.timerSub = this.timer$.subscribe(() => console.log("GAME COMPLETED"));
+
+    //no-click within 30 secs
+    this.noAnswer$
+      = this.timerForThirtySec$
+      .do((t)=>console.log("no answer stream: " + t))
+      .filter(t => t === 0)
+      .mapTo(false); // answer is wrong
+
+
+    //answer stream
+    this.answer$ = this.clickChoice$
+      .map(e => $(e.target).data("correct")) // is answer correct? true or false
+      .merge(this.noAnswer$)
+      .scan((acc, isCorrect) => {
+        isCorrect ? acc.correct++ : acc.wrong++;
+        return { correct: acc.correct, wrong: acc.wrong, isCurrentCorrect: isCorrect}
+      }, { correct:0, wrong:0, isCurrentCorrect: false });
+
 
     //answer subscription
-    this.answerSub = this.answer$.subscribe((isAnswer) => {
-      console.log(isAnswer);
-      // correct answer
-      if(isAnswer) {
-        $("#correct-msg").show('slow', () => {
-          setTimeout(() => $("#correct-msg").hide('slow'), 3000);
-        });
-      }
-      // wrong answer
-      else {
-        $("#wrong-msg").show('slow', () => {
-          setTimeout(() => $("#wrong-msg").hide('slow'), 3000);
-        });
-      }
-
-
-    });
-
-
-    // this.correctSub =
-
+    this.answerSub
+      = this.answer$.subscribe(gameStat => this.view.showResultMsg(gameStat));
   }
+
   nextProblem() {
     this.view.renderProblem(problems[15]);
   }
@@ -97,7 +98,6 @@ export class App {
 }
 $(document).ready(() => {
   const app = new App(new View());
-  app.start();
 
 });
 
