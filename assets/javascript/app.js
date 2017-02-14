@@ -119,7 +119,7 @@ export class App {
     this.problemsAndAnswers$
       = this.answer$
       .startWith({}) // fake answer for the first problem feed
-      .zip(this.problems$.do(x =>console.log(x))); // take while problem is not completed, Every 33 sec, receive new problem
+      .zip(this.problems$); // take while problem is not completed, Every 33 sec, receive new problem
 
 
     //restart game button click event stream(try again)

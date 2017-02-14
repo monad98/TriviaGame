@@ -38,7 +38,6 @@ export class View {
   renderProblem(problemObj) {
     const problem = problemObj.problem;
     const currentNum = problemObj.counter;
-    console.log(this.currentNum.text());
 
     // timer set, question title, code update, current question number
     this.remainingTimeEl.text("30");
