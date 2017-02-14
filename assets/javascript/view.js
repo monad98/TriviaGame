@@ -34,7 +34,7 @@ export class View {
 
   }
 
-  //render problem with problem object
+  //render problem view with problem object
   renderProblem(problemObj) {
     const problem = problemObj.problem;
     const currentNum = problemObj.counter;
@@ -44,14 +44,14 @@ export class View {
     this.questionEl.text(problem.q);
     this.codeEl.html(problem.code); //TODO: Recreate every time
 
-    if(this.currentNum.text() === "-" || +this.totalNum.text() > +this.currentNum.text()) this.currentNum.text(currentNum); //update current question number except last question
+    if (this.currentNum.text() === "-" || +this.totalNum.text() > +this.currentNum.text()) this.currentNum.text(currentNum); //update current question number except last question
 
     //code highlight
-    hljs.initHighlighting();
+    hljs.highlightBlock(this.codeEl[0]);
 
     //merge correct choice and incorrect choices into new array
     const correctIndex = Helper.randomIndex(problem.incorrect.length); // index where correct choice is put(?) at
-    const choices = [ ...problem.incorrect.slice(0, correctIndex), problem.correct, ...problem.incorrect.slice(correctIndex)];
+    const choices = [...problem.incorrect.slice(0, correctIndex), problem.correct, ...problem.incorrect.slice(correctIndex)];
 
     //delete previous multiple elements
     $(".choice").remove();
@@ -63,64 +63,74 @@ export class View {
     })
   }
 
+  // method for updating timer
   updateRemainingTime(t) {
     this.remainingTimeEl.text(t);
     this.timeBarEl.css("width", (t / 30 * 100) + "%"); //decrease time bar length
   }
 
+  // for Each user input(click), show the message whether it's correct or wrong
+  // gamestat is object which has 3 properties (correct: number of correct answer, wrong, isCurrnetCorrect: boolean which checks user answer is correct or not
   showResultMsg(gameStat) {
 
-    this.container.animate({ opacity: 0.3 });
+    this.container.animate({opacity: 0.3});
 
     // correct answer
-    if(gameStat.isCurrentCorrect) {
+    if (gameStat.isCurrentCorrect) {
       this.numCorrectEl.text(gameStat.correct);
       this.correctMsg.show('slow', () => {
         setTimeout(() => {
           this.correctMsg.hide('slow');
-          this.container.animate({ opacity: 1 });
+          this.container.animate({opacity: 1});
         }, 1000);
       });
     }
     // wrong answer
     else {
       this.numWrongEl.text(gameStat.wrong);
+      $("#multiple-box button.choice").each(function() {
+        if($(this).data("correct")) $(this).removeClass("btn-primary").addClass("btn-danger");
+      });
       this.wrongMsg.show('slow', () => {
         setTimeout(() => {
           this.wrongMsg.hide('slow');
-          this.container.animate({ opacity: 1 });
+          this.container.animate({opacity: 1});
         }, 1000);
       });
     }
   }
 
+  // After user select difficulty, hide "difficulty select UI"
   hideStartUI() {
     this.startUI.hide("slow");
-    this.container.animate({ opacity: 1 });
+    this.container.animate({opacity: 1});
   }
 
+  // Number of total problems. It depends on the difficulty user selected
   setTotalProblemCount(numOfQuestion) {
     this.totalNum.text(numOfQuestion);
   }
 
+  // Method for rendering game ending
   renderGameEndView() {
     const score = Math.round((+this.numCorrectEl.text()) / (+this.totalNum.text()) * 100);
     this.gameEndBoxEl.find("h1 span.label").text("Score: " + score + "%");
-    if(score > 80) {
+    if (score > 80) {
       this.gameEndBoxEl.find("h2").text("Great Job!!");
-      this.gameEndBoxEl.find("img").attr("src","assets/images/great.png");
-    } else if(score > 50) {
+      this.gameEndBoxEl.find("img").attr("src", "assets/images/great.png");
+    } else if (score > 50) {
       this.gameEndBoxEl.find("h2").text("Good!");
-      this.gameEndBoxEl.find("img").attr("src","assets/images/ok.png");
+      this.gameEndBoxEl.find("img").attr("src", "assets/images/ok.png");
     } else {
       this.gameEndBoxEl.find("h2").text("Oooops!");
-      this.gameEndBoxEl.find("img").attr("src","assets/images/bad.png");
+      this.gameEndBoxEl.find("img").attr("src", "assets/images/bad.png");
     }
 
     //Show game ending view
     this.gameEndBoxEl.show("slow");
   }
 
+  // User want to try again, so initialize view;
   tryAgainClicked() {
     this.gameEndBoxEl.hide("slow");
     this.startUI.show("slow");
@@ -128,7 +138,7 @@ export class View {
     this.totalNum.text("-");
     this.numCorrectEl.text("0");
     this.numWrongEl.text("0");
-    this.container.animate({ opacity: 0.3 });
+    this.container.animate({opacity: 0.3});
 
   }
 

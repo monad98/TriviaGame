@@ -1,3 +1,7 @@
+body {
+  background-image: url("../images/code.jpg");
+  background-size: auto;
+}
 .container {
   opacity: 0.3;
 }
@@ -9,6 +13,13 @@
 }
 .glyphicon-time, #remaining-time {
   color: #fff31a;
+}
+.page-header {
+  margin-bottom: 10px;
+}
+.page-header h1 {
+  color: #0654d8;
+  text-shadow: 1px 1px 2px yellow, 0 0 25px #ffc83f, 0 0 5px #8b8628;
 }
 pre {
   font-size: 1.1em;
@@ -23,10 +34,9 @@ pre.rounded {
 #time-bar {
   width: 0%;
 }
-/*.progress-bar {*/
-  /*-webkit-transition: none !important;*/
-  /*transition: none !important;*/
-/*}*/
+.progress {
+  margin-top: 15px;
+}
 
 #multiple-box {
   margin-top: 20px;
@@ -39,8 +49,8 @@ pre.rounded {
   height: 200px;
   position: fixed;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 30%;
+  transform: translate(-50%, -30%);
 }
 #correct-msg {
   background-image: url("../images/approved-151676_640.png");
@@ -49,7 +59,7 @@ pre.rounded {
   background-image: url("../images/error-24842_640.png");
 }
 #js-image {
-  background-image: url("../images/javascript.png");
+  background-image: url("../images/js.png");
   background-size: contain;
   z-index: 1;
   width: 80px;
@@ -58,8 +68,7 @@ pre.rounded {
   right: 10px;
   top: 10px;
 }
-#num-correct, #num-wrong {
-}
+
 .glyphicon-remove {
   color: red;
   margin-left: 80px;
@@ -89,4 +98,7 @@ pre.rounded {
 }
 #game-end h2 {
   color: #337ab7;
+}
+.source p {
+  text-shadow: 1px 1px 2px yellow, 0 0 25px #ffc83f, 0 0 5px #8b8628;
 }

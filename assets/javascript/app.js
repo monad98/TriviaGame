@@ -40,7 +40,7 @@ export class App {
     this.start$
       = Observable.fromEvent($(".start-button"), "click")
       .do(() => this.view.hideStartUI()) // view update
-      .share(); //difficulty button submit, quiz start
+      .share(); //difficulty button submit, quiz start!
 
     //start event -> problems stream
     this.problems$
@@ -61,7 +61,7 @@ export class App {
             q: "You Completed All The Quizzes. Bonus Quiz: What is printed in the console?",
             code: "var howCanIStudyJavascript = \"Study All Night.\"\nfunction howManyDaysShouldIStudyJavascript() {\n    return howCanIStudyJavascript + \"For 3" +
             " Years\";\n}\nhowManyDaysShouldIStudyJavascript();",
-            incorrect: ["Study All Night For 3 Days", "Study All Night For 3 Months", "Study All Night For 3 Centuries"],
+            incorrect: ["Study All Night For 3 Months", "Study All Night For 3 Centuries"],
             correct: "Study All Night For 3 Years",
           })) // "Complete quizzes" message and bonus quiz
           .scan((acc, problem) => { // counting current question number;
@@ -152,8 +152,8 @@ export class App {
           this.view.renderProblem(problemObj);
         }
       },
-      () => {},
-      () => {
+      () => {}, // error
+      () => {  // complete : Quiz is completed, so we are going to show game ending view.
         console.log("Trivia Quiz Completed!");
 
         //after 1500ms of showing result of this problem, show overall game result
