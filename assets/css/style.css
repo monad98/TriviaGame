@@ -32,7 +32,7 @@ pre.rounded {
   border-radius: 10px;
 }
 #time-bar {
-  width: 0%;
+  width: 0;
 }
 .progress {
   margin-top: 15px;

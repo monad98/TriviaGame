@@ -82,7 +82,7 @@ export class App {
           .takeUntil(this.clickChoice$)
           .do(t => this.view.updateRemainingTime(t)) // update remaining time UI
           .repeatWhen((completed) =>
-            completed.delay(1500) // 1.5 secs delay for correct/wrong message.
+            completed.delay(2000) // 2 secs delay for correct/wrong message.
               .do(() => {
                 console.log("Answered or 30 seconds passed.");
               })
@@ -94,7 +94,7 @@ export class App {
     this.clickChoice$ = Observable.fromEventPattern((h) => {
       $("#multiple-box").on("click", ".choice", h); // if one of multiple is clicked
     })
-      .throttleTime(1500 + 100) // while showing the result message (correct, wrong), restrict click again.
+      .throttleTime(2000 + 100) // while showing the result message (correct, wrong), restrict click again.
       .share();
 
     //no-click within 30 secs stream
@@ -143,11 +143,11 @@ export class App {
       ([answerObj, problemObj]) => {
         // this is real answer (not the first fake one)
         if(answerObj.hasOwnProperty("isCurrentCorrect")) {
-          // After we show the result of user's answer , we wait 1.5 sec before we show another problem to user
+          // After we show the result of user's answer , we wait 2 sec before we show another problem to user
           this.view.showResultMsg(answerObj);
           setTimeout(() => {
             this.view.renderProblem(problemObj);
-          }, 1500);
+          }, 2000);
         } else { //this is a fake answer, so just show problem (not the result)
           this.view.renderProblem(problemObj);
         }
@@ -156,8 +156,8 @@ export class App {
       () => {  // complete : Quiz is completed, so we are going to show game ending view.
         console.log("Trivia Quiz Completed!");
 
-        //after 1500ms of showing result of this problem, show overall game result
-        setTimeout(() => this.view.renderGameEndView(), 1500);
+        //after 2000ms of showing result of this problem, show overall game result
+        setTimeout(() => this.view.renderGameEndView(), 2000);
       }
     );
   }

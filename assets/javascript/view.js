@@ -73,7 +73,7 @@ export class View {
   // gamestat is object which has 3 properties (correct: number of correct answer, wrong, isCurrnetCorrect: boolean which checks user answer is correct or not
   showResultMsg(gameStat) {
 
-    this.container.animate({opacity: 0.3});
+    this.container.animate({opacity: 0.6});
 
     // correct answer
     if (gameStat.isCurrentCorrect) {
@@ -82,7 +82,7 @@ export class View {
         setTimeout(() => {
           this.correctMsg.hide('slow');
           this.container.animate({opacity: 1});
-        }, 1000);
+        }, 1500);
       });
     }
     // wrong answer
@@ -95,7 +95,7 @@ export class View {
         setTimeout(() => {
           this.wrongMsg.hide('slow');
           this.container.animate({opacity: 1});
-        }, 1000);
+        }, 1500);
       });
     }
   }
@@ -138,7 +138,7 @@ export class View {
     this.totalNum.text("-");
     this.numCorrectEl.text("0");
     this.numWrongEl.text("0");
-    this.container.animate({opacity: 0.3});
+    this.container.animate({opacity: 0.6});
 
   }
 
