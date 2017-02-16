@@ -37,10 +37,10 @@ export class App {
 
     this.view = view;
 
-    this.start$
+    this.start$  //difficulty button submit, quiz start!
       = Observable.fromEvent($(".start-button"), "click")
-      .do(() => this.view.hideStartUI()) // view update
-      .share(); //difficulty button submit, quiz start!
+      .do(() => this.view.hideStartUI()) // side effect: view update
+      .share();
 
     //start event -> problems stream
     this.problems$
@@ -63,7 +63,7 @@ export class App {
             " Years\";\n}\nhowManyDaysShouldIStudyJavascript();",
             incorrect: ["Study All Night For 3 Months", "Study All Night For 3 Centuries"],
             correct: "Study All Night For 3 Years",
-          })) // "Complete quizzes" message and bonus quiz
+          })) // Show "Complete quizzes" message and bonus quiz
           .scan((acc, problem) => { // counting current question number;
             const count = acc.counter + 1;
             return {counter: count, problem: problem};
@@ -80,7 +80,7 @@ export class App {
           .map(t => 30-t)
           .take(31) // for 30 seconds for solving problem
           .takeUntil(this.clickChoice$)
-          .do(t => this.view.updateRemainingTime(t)) // update remaining time UI
+          .do(t => this.view.updateRemainingTime(t)) // side effect: update remaining time UI
           .repeatWhen((completed) =>
             completed.delay(2000) // 2 secs delay for correct/wrong message.
               .do(() => {
@@ -100,11 +100,11 @@ export class App {
     //no-click within 30 secs stream
     this.noAnswer$
       = this.timer$
-      .filter(t => t === 0)
+      .filter(t => t === 0) // when time's up
       .mapTo(false); // because user didn't pick answer, consider answer for this question wrong
 
 
-    //answer stream
+    //answer stream: Observable<boolean>, not clicked answer within 30secs   +    clicked answer
     this.answer$
       = this.clickChoice$
       .map(e => $(e.target).data("correct")) // is answer correct? true or false
@@ -115,7 +115,7 @@ export class App {
       }, { correct:0, wrong:0, isCurrentCorrect: false });
 
 
-    //stream that contain pairs of problem and answer
+    // stream that contain pairs of problem and answer
     this.problemsAndAnswers$
       = this.answer$
       .startWith({}) // fake answer for the first problem feed
@@ -152,7 +152,7 @@ export class App {
           this.view.renderProblem(problemObj);
         }
       },
-      () => {}, // error
+      () => { console.log("Something went wrong.")}, // error
       () => {  // complete : Quiz is completed, so we are going to show game ending view.
         console.log("Trivia Quiz Completed!");
 
@@ -166,6 +166,5 @@ export class App {
 $(document).ready(() => {
   const app = new App(new View());
   app.start();
-
 });
 

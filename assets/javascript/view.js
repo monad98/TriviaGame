@@ -1,7 +1,6 @@
-import {Helper} from "./helper";
 import $ from 'jquery';
 import hljs from 'highlight.js';
-
+import { randomIndex, putElementAtIndex, switchClass } from './helper';
 export class View {
 
   constructor() {
@@ -44,14 +43,15 @@ export class View {
     this.questionEl.text(problem.q);
     this.codeEl.html(problem.code); //TODO: Recreate every time
 
-    if (this.currentNum.text() === "-" || +this.totalNum.text() > +this.currentNum.text()) this.currentNum.text(currentNum); //update current question number except last question
+    //update current question number except last question
+    if (this.currentNum.text() === "-" || +this.totalNum.text() > +this.currentNum.text()) this.currentNum.text(currentNum);
 
     //code highlight
     hljs.highlightBlock(this.codeEl[0]);
 
     //merge correct choice and incorrect choices into new array
-    const correctIndex = Helper.randomIndex(problem.incorrect.length); // index where correct choice is put(?) at
-    const choices = [...problem.incorrect.slice(0, correctIndex), problem.correct, ...problem.incorrect.slice(correctIndex)];
+    const correctIndex = randomIndex(problem.incorrect.length); // index where correct choice is put(?) at
+    const choices = putElementAtIndex(problem.incorrect, problem.correct, correctIndex);
 
     //delete previous multiple elements
     $(".choice").remove();
@@ -70,7 +70,7 @@ export class View {
   }
 
   // for Each user input(click), show the message whether it's correct or wrong
-  // gamestat is object which has 3 properties (correct: number of correct answer, wrong, isCurrnetCorrect: boolean which checks user answer is correct or not
+  // gameStat is object which has 3 properties (correct: number of correct answer, wrong, isCurrentCorrect: boolean which checks user answer is correct or not
   showResultMsg(gameStat) {
 
     this.container.animate({opacity: 0.6});
@@ -78,6 +78,9 @@ export class View {
     // correct answer
     if (gameStat.isCurrentCorrect) {
       this.numCorrectEl.text(gameStat.correct);
+      $("#multiple-box button.choice").each(function() { // show correct answer
+        if($(this).data("correct")) switchClass($(this), "btn-primary", "btn-success");
+      });
       this.correctMsg.show('slow', () => {
         setTimeout(() => {
           this.correctMsg.hide('slow');
@@ -88,8 +91,8 @@ export class View {
     // wrong answer
     else {
       this.numWrongEl.text(gameStat.wrong);
-      $("#multiple-box button.choice").each(function() {
-        if($(this).data("correct")) $(this).removeClass("btn-primary").addClass("btn-danger");
+      $("#multiple-box button.choice").each(function() { // show correct answer
+        if($(this).data("correct")) switchClass($(this), "btn-primary", "btn-danger");
       });
       this.wrongMsg.show('slow', () => {
         setTimeout(() => {
@@ -99,6 +102,7 @@ export class View {
       });
     }
   }
+
 
   // After user select difficulty, hide "difficulty select UI"
   hideStartUI() {
