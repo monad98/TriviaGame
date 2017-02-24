@@ -1,6 +1,8 @@
 # TriviaGame
 Javascript trivia game implemented with RxJS.
 
+[Heroku app](https://js-trivia-game.herokuapp.com/)
+
 ## Quick Start
 ```bash
 #clone the repo
